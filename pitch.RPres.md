@@ -1,0 +1,82 @@
+
+The Radioactive Decay Calculator Shiny App
+========================================================
+author: mghaz007
+date: 2015-05-23
+transition: rotate
+font-family: 'Helvetica'
+
+App: http://mghaz007.shinyapps.io/RadioActiveDecayCalculator  
+Source Code: http://github.com/mghaz007/Developing-Data-Products
+
+How do radioactive isotopes decay over time?
+========================================================
+The Radioactive-Decay Shiny App lets you experiment with how different radioactive isotopes decay over time and compute the following three quantitative measures:
+
+1. Understand how different *radio-active isotopes* decay defiiferently over time 
+2. Determine how much of the selected isotope is left after it has decayed for a selected period of time, and
+3. What percentages of all the listed radioactive isotopes are left after the delected time period.
+
+Radioative decay algorithm
+========================================================
+<small>
+
+```r
+# get the decay rate lambda
+getlambda<-function(isotope) {
+  switch(isotope,
+         'beryllium-11'=13.81,
+         'carbon-10'=19.29,
+         'dubnium-261'=27.0,
+         'seaborgium-266'=30.0,
+         'dubnium-262'=34.0);
+}
+
+# compute the remaining amount
+getremainpercent<-function(initial_amount,isotope,etime) {
+  lambda<-getlambda(isotope)
+  lambda<-log(2)/lambda;
+  x<-initial_amount*exp(-lambda * etime )
+  x
+}
+```
+</small>  
+
+Radioactive Isotope Decay Algorithm Example
+========================================================
+The app has three simple inputs:
+
+* The selected isotope
+
+* The initial amount (in grams)
+
+* The time period the during which the isotope is allowed to decay
+
+The algorithm can determine estimate the remaining amount of the selected isotope after decaying for the selected period of time.
+
+
+```r
+getremainpercent(1000,'beryllium-11',30) 
+```
+
+```
+[1] 221.8507
+```
+or, another example: 
+
+
+```r
+getremainpercent(500,'dubnium-262',10) 
+```
+
+```
+[1] 407.7855
+```
+
+Radioactive Decay - Percent of remaining radioative isotopes
+========================================================
+We can also compute and graphically illustrate the remaining percentages of all the listed radioactive isotopes after the delected time period.
+
+![alt text](percentremains.png)
+
+
